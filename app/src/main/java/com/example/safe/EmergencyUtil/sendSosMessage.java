@@ -1,0 +1,110 @@
+package com.example.safe.EmergencyUtil;
+
+import static androidx.core.app.ActivityCompat.requestPermissions;
+
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.telephony.SmsManager;
+import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+public class sendSosMessage {
+    private boolean smsSendingPermission=false;
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public boolean sendAll(Activity currentActivity) {
+        //get emergency contact from emergencyutil
+
+        //check permissions
+        Context currentContext=currentActivity.getApplicationContext();
+        if (currentContext.checkSelfPermission(Manifest.permission.SEND_SMS)
+                == PackageManager.PERMISSION_GRANTED) {
+            smsSendingPermission=true;
+        }else if (!ActivityCompat.shouldShowRequestPermissionRationale(currentActivity, Manifest.permission.SEND_SMS)) {
+            AlertDialog.Builder smsPermission = new AlertDialog.Builder(currentContext);
+            smsPermission.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+//                    toast.makeText(this,"enter a text here",Toast.LENTH_SHORT).show();
+                }
+            });
+            smsPermission.create();
+        }else {
+            requestPermissions(currentActivity, new String[]{Manifest.permission.SEND_SMS}, 2);
+            smsSendingPermission=true;
+        }
+        if(!smsSendingPermission){
+            return false;
+        }
+        String phoneNumber="9909402670";
+        String message="emergency";
+        String SENT = "SMS_SENT";
+        String DELIVERED = "SMS_DELIVERED";
+
+        PendingIntent sentPI = PendingIntent.getBroadcast(currentContext, 0,
+                new Intent(SENT), 0);
+
+        PendingIntent deliveredPI = PendingIntent.getBroadcast(currentContext, 0,
+                new Intent(DELIVERED), 0);
+
+        //---when the SMS has been sent---
+        currentContext.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context arg0, Intent arg1) {
+                switch (getResultCode()) {
+                    case Activity.RESULT_OK:
+                        Toast.makeText(currentContext, "SMS sent",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
+                        Toast.makeText(currentContext, "Generic failure",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_NO_SERVICE:
+                        Toast.makeText(currentContext, "No service",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_NULL_PDU:
+                        Toast.makeText(currentContext, "Null PDU",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_RADIO_OFF:
+                        Toast.makeText(currentContext, "Radio off",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        }, new IntentFilter(SENT));
+
+        //---when the SMS has been delivered---
+        currentContext.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context arg0, Intent arg1) {
+                switch (getResultCode()) {
+                    case Activity.RESULT_OK:
+                        Toast.makeText(currentContext, "SMS delivered",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                    case Activity.RESULT_CANCELED:
+                        Toast.makeText(currentContext, "SMS not delivered",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        }, new IntentFilter(DELIVERED));
+
+        SmsManager sms = SmsManager.getDefault();
+        sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
+        return true;
+    }
+}

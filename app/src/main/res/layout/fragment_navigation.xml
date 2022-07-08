@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:background="@drawable/navbar_gradient">
+
+    <ImageButton
+        android:id="@+id/homeNavbarButton"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_baseline_home_24" />
+
+    <ImageButton
+        android:id="@+id/settingsNavbarButton"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        app:layout_constraintEnd_toStartOf="@+id/familyNavbarButton"
+        app:layout_constraintStart_toEndOf="@+id/homeNavbarButton"
+        app:layout_constraintTop_toTopOf="@+id/homeNavbarButton"
+        app:srcCompat="@drawable/ic_baseline_settings_24" />
+
+    <ImageButton
+        android:id="@+id/familyNavbarButton"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/settingsNavbarButton"
+        app:srcCompat="@drawable/ic_baseline_family_restroom_24" />
+</androidx.constraintlayout.widget.ConstraintLayout>
