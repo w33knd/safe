@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.safe.EmergencyUtil.FallDetectService;
 import com.example.safe.Fragments.navigationBarFragment;
 import com.example.safe.R;
 
@@ -26,6 +27,15 @@ public class MainActivity extends AppCompatActivity {
         //show if login is already done and welcomed
         //make navigation bottom frame layout
         switchActivity ();
+    }
+    //start user fall detect service
+    public void startFallDetectService(){
+        Intent msgIntent = new Intent(this, FallDetectService.class);
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("currentActivity",this.getClass());
+        msgIntent.putExtras(bundle);
+//        msgIntent.putExtra(SimpleIntentService.PARAM_IN_MSG, strInputMsg);
+        startService(msgIntent);
     }
     public void switchActivity(){
         Intent i = new Intent(MainActivity.this, DashboardActivity.class);

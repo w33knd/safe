@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.safe.EmergencyUtil.fallDetect;
 import com.example.safe.Fragments.mapFragment;
 import com.example.safe.Fragments.navigationBarFragment;
 import com.example.safe.EmergencyUtil.sendSosMessage;
@@ -43,25 +44,13 @@ public class emergencyActivity extends AppCompatActivity {
                 emergencyStep++;
                 changeImageAnimation((ImageView) findViewById(R.id.connectEmegencyImage));
                 nextStepInfo.setText("Searching for Helper");
-//                Fragment mapFragment= new mapFragment();
-//                locationUtil forMap=new locationUtil();
-//                Location currentLocation=forMap.getCurrentLocation(this);
-//                if(currentLocation!=null){
-//                    Bundle mapBundle= new Bundle();
-//                    mapBundle.putParcelable("currentLocation",currentLocation);
-//                    mapFragment.setArguments(mapBundle);
-//                }
-                Intent findingHelper = new Intent();
-
-                connectToSafe();
+                Intent findingHelper = new Intent(emergencyActivity.this,FindingHelperActivity.class);
+                startActivity(findingHelper);
+//                connectToSafe();
         }
     }
     private void changeImageAnimation(ImageView v){
         v.setImageResource(R.drawable.emergency_circle_green);
-    }
-    private void connectToSafe() {
-        toast t=new toast();
-        t.handle_error("connecting to safe",getApplicationContext());
     }
     private void sendMessage(){
         sendSosMessage sosMessage=new sendSosMessage();
@@ -78,12 +67,15 @@ public class emergencyActivity extends AppCompatActivity {
         ImageButton emergencyButton=(ImageButton) findViewById(R.id.mainEmergencyButton);
         emergencyButton.startAnimation(shake);
         TextView temp=findViewById(R.id.textView8);
+        fallDetect userState=new fallDetect();
+        userState.initialize(this);
+        temp.setText(userState.curr_state);
         emergencyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                temp.setText(Integer.toString(noOfClicks));
                 if(handler!=null){
-                    temp.setText(Integer.toString(noOfClicks));
+//                    temp.setText(Integer.toString(noOfClicks));
                     emergencyButton.setMaxWidth(210);
                     if(noOfClicks++>=2){
                         changeEmergencyNextStep(findViewById(R.id.nextStepInfoText));

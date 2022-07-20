@@ -18,9 +18,9 @@ public class fallDetect implements SensorEventListener {
     double sigma=0.5,th=10,th1=5,th2=2;
     private SensorManager sensorManager;
     public static String curr_state,prev_state;
-    public MediaPlayer m1_fall,m2_sit,m3_stand,m4_walk;
+//    public MediaPlayer m1_fall,m2_sit,m3_stand,m4_walk;
 
-    private void initialize(Activity currentActivity) {
+    public void initialize(Activity currentActivity) {
         // TODO Auto-generated method stub
         sensorManager=(SensorManager) currentActivity.getSystemService(currentActivity.getApplicationContext().SENSOR_SERVICE);
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_UI);
@@ -90,20 +90,20 @@ public class fallDetect implements SensorEventListener {
         // TODO Auto-generated method stub
 
         //Fall !!
-        if(!prev_state1.equalsIgnoreCase(curr_state1)){
-            if(curr_state1.equalsIgnoreCase("fall")){
-                m1_fall.start();
-            }
-            if(curr_state1.equalsIgnoreCase("sitting")){
-                m2_sit.start();
-            }
-            if(curr_state1.equalsIgnoreCase("standing")){
-                m3_stand.start();
-            }
-            if(curr_state1.equalsIgnoreCase("walking")){
-                m4_walk.start();
-            }
-        }
+//        if(!prev_state1.equalsIgnoreCase(curr_state1)){
+//            if(curr_state1.equalsIgnoreCase("fall")){
+//                m1_fall.start();
+//            }
+//            if(curr_state1.equalsIgnoreCase("sitting")){
+//                m2_sit.start();
+//            }
+//            if(curr_state1.equalsIgnoreCase("standing")){
+//                m3_stand.start();
+//            }
+//            if(curr_state1.equalsIgnoreCase("walking")){
+//                m4_walk.start();
+//            }
+//        }
 
 
     }
