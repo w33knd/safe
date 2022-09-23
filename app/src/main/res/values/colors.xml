@@ -13,6 +13,7 @@
     <color name="app_ghost_white">#F7F7FF</color>
     <color name="app_light_pink">#FBABAA</color>
     <color name="app_orange_red">#FE5F55</color>
+    <color name="safe_green">#6CC24A</color>
     <color name="white">#FFFFFF</color>
     <color name="transparent">#00000000</color>
 </resources>

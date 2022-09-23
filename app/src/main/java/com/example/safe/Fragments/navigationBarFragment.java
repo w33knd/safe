@@ -1,6 +1,7 @@
 package com.example.safe.Fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.example.safe.Activities.DashboardActivity;
+import com.example.safe.Activities.FamilyActivity;
+import com.example.safe.Activities.SettingsActivity;
+import com.example.safe.Activities.emergencyActivity;
 import com.example.safe.R;
 import com.example.safe.testing.toast;
 
@@ -25,24 +30,39 @@ public class navigationBarFragment extends Fragment {
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toast t=new toast();
-                t.handle_error("home clicked",getActivity().getApplicationContext());
+//                toast t=new toast();
+//                t.handle_error("home clicked",getActivity().getApplicationContext());
+                if(view.getContext().getClass()==DashboardActivity.class){
+                    return;
+                }
+                Intent i=new Intent(view.getContext(), DashboardActivity.class);
+                startActivity(i);
             }
         });
         ImageButton settingsButton=(ImageButton) view.findViewById(R.id.settingsNavbarButton);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toast t=new toast();
-                t.handle_error("settings clicked",getActivity().getApplicationContext());
+//                toast t=new toast();
+//                t.handle_error("settings clicked",getActivity().getApplicationContext());
+                if(view.getContext().getClass()==SettingsActivity.class){
+                    return;
+                }
+                Intent i=new Intent(view.getContext(), SettingsActivity.class);
+                startActivity(i);
             }
         });
         ImageButton familyButton=(ImageButton) view.findViewById(R.id.familyNavbarButton);
         familyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toast t=new toast();
-                t.handle_error("family clicked",getActivity().getApplicationContext());
+//                toast t=new toast();
+//                t.handle_error("family clicked",getActivity().getApplicationContext());
+                if(view.getContext().getClass()== FamilyActivity.class){
+                    return;
+                }
+                Intent i=new Intent(view.getContext(), FamilyActivity.class);
+                startActivity(i);
             }
         });
         return view;

@@ -6,10 +6,43 @@
     android:layout_height="match_parent"
     tools:context=".Activities.DetectedEmergencyActivity">
 
+    <FrameLayout
+        android:id="@+id/navigationFrameLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:translationZ="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Connect To \nSafe Network"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/connectEmegencyImage2"
+        app:layout_constraintStart_toStartOf="@+id/connectEmegencyImage2"
+        app:layout_constraintTop_toBottomOf="@+id/connectEmegencyImage2" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Emergency\n SOS"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/sosEmergencyImage2"
+        app:layout_constraintStart_toStartOf="@+id/sosEmergencyImage2"
+        app:layout_constraintTop_toBottomOf="@+id/sosEmergencyImage2" />
+
     <ImageButton
         android:id="@+id/mainEmergencyButton2"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:background="#00000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,6 +60,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/emergency_circle" />
 
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SOS"
+        android:textColor="@color/app_ghost_white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/sosEmergencyImage2"
+        app:layout_constraintEnd_toEndOf="@+id/sosEmergencyImage2"
+        app:layout_constraintStart_toStartOf="@+id/sosEmergencyImage2"
+        app:layout_constraintTop_toTopOf="@+id/sosEmergencyImage2" />
+
     <ImageView
         android:id="@+id/connectEmegencyImage2"
         android:layout_width="75dp"
@@ -36,6 +82,19 @@
         app:layout_constraintTop_toTopOf="@+id/sosEmergencyImage2"
         app:srcCompat="@drawable/emergency_circle" />
 
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SAFE"
+        android:textColor="@color/app_ghost_white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/connectEmegencyImage2"
+        app:layout_constraintEnd_toEndOf="@+id/connectEmegencyImage2"
+        app:layout_constraintStart_toStartOf="@+id/connectEmegencyImage2"
+        app:layout_constraintTop_toTopOf="@+id/connectEmegencyImage2" />
+
     <ImageView
         android:id="@+id/findingEmergencyImage2"
         android:layout_width="75dp"
@@ -44,4 +103,62 @@
         app:layout_constraintStart_toEndOf="@+id/connectEmegencyImage2"
         app:layout_constraintTop_toTopOf="@+id/sosEmergencyImage2"
         app:srcCompat="@drawable/emergency_circle" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Finding a Helper"
+        app:layout_constraintEnd_toEndOf="@+id/findingEmergencyImage2"
+        app:layout_constraintStart_toStartOf="@+id/findingEmergencyImage2"
+        app:layout_constraintTop_toBottomOf="@+id/findingEmergencyImage2" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="36dp"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="@+id/findingEmergencyImage2"
+        app:layout_constraintEnd_toEndOf="@+id/findingEmergencyImage2"
+        app:layout_constraintStart_toStartOf="@+id/findingEmergencyImage2"
+        app:layout_constraintTop_toTopOf="@+id/findingEmergencyImage2"
+        app:srcCompat="@android:drawable/stat_sys_speakerphone" />
+
+    <TextView
+        android:id="@+id/nextStepInfoDetected"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Looks like you've taken a hard fall."
+        android:textAlignment="center"
+        android:textColor="@color/app_ghost_white"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/countDownTextView"
+        app:layout_constraintEnd_toEndOf="@+id/mainEmergencyButton2"
+        app:layout_constraintStart_toStartOf="@+id/mainEmergencyButton2"
+        app:layout_constraintTop_toTopOf="@+id/mainEmergencyButton2" />
+
+    <TextView
+        android:id="@+id/countDownTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:text="TextView"
+        android:textColor="@color/app_orange_red"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/mainEmergencyButton2"
+        app:layout_constraintEnd_toEndOf="@+id/mainEmergencyButton2"
+        app:layout_constraintStart_toStartOf="@+id/mainEmergencyButton2" />
+
+    <Button
+        android:id="@+id/okButton"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/safe_green"
+        android:text="I'm ok"
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainEmergencyButton2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

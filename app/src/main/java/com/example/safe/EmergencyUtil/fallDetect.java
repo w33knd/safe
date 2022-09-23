@@ -2,6 +2,7 @@ package com.example.safe.EmergencyUtil;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -20,9 +21,9 @@ public class fallDetect implements SensorEventListener {
     public static String curr_state,prev_state;
 //    public MediaPlayer m1_fall,m2_sit,m3_stand,m4_walk;
 
-    public void initialize(Activity currentActivity) {
+    public void initialize(Context currentContext) {
         // TODO Auto-generated method stub
-        sensorManager=(SensorManager) currentActivity.getSystemService(currentActivity.getApplicationContext().SENSOR_SERVICE);
+        sensorManager=(SensorManager) currentContext.getSystemService(currentContext.SENSOR_SERVICE);
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_UI);
         for(i=0;i<BUFF_SIZE;i++){
             window[i]=0;

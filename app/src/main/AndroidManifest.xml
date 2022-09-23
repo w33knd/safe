@@ -16,19 +16,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Safe">
         <activity
-            android:name=".Activities.SettingsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.DetectedEmergencyActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.FindingHelperActivity"
+            android:name=".Activities.FamilyActivity"
             android:exported="false" />
 
         <service
             android:name=".EmergencyUtil.FallDetectService"
-            android:exported="false" />
+            android:enabled="true"
+            android:exported="true"></service>
 
+        <activity
+            android:name=".Activities.SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.DetectedEmergencyActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activities.FindingHelperActivity"
+            android:exported="false" />
         <activity
             android:name=".Activities.emergencyActivity"
             android:exported="false" />

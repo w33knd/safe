@@ -33,7 +33,14 @@ public class DashboardActivity extends AppCompatActivity {
             mapBundle.putParcelable("currentLocation",currentLocation);
             mapFragment.setArguments(mapBundle);
         }
-
+        Button detected=(Button) findViewById(R.id.button2);
+        detected.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent i=new Intent(DashboardActivity.this,DetectedEmergencyActivity.class);
+                startActivity(i);
+            }
+        });
         fragmentManager.beginTransaction().replace(R.id.mapFrameLayout,mapFragment).commit();
         ImageButton emergencyClick=(ImageButton) findViewById(R.id.buttonEmergency);
         emergencyClick.setOnClickListener(new View.OnClickListener() {
@@ -41,14 +48,6 @@ public class DashboardActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i=new Intent(DashboardActivity.this,emergencyActivity.class);
                 startActivity(i);
-
-            }
-        });
-        Button current=findViewById(R.id.button2);
-        current.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
             }
         });
     }
