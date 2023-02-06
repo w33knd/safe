@@ -6,28 +6,28 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Layout;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
+import android.widget.BaseAdapter;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.example.safe.EmergencyUtil.userClass;
-import com.example.safe.EmergencyUtil.userContact;
+import com.example.safe.Account.userClass;
+import com.example.safe.Account.userContact;
 import com.example.safe.Fragments.navigationBarFragment;
 import com.example.safe.R;
 import com.example.safe.testing.toast;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class FamilyActivity extends AppCompatActivity {
 
@@ -38,26 +38,12 @@ public class FamilyActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.navigationFrameLayout, navigationBarFragment.class, null).commit();
         Gson gson=new Gson();
-    SharedPreferences userPreferences=getSharedPreferences("context",MODE_PRIVATE);
-//        SharedPreferences.Editor userEditor= getPreferences(MODE_PRIVATE).edit();
+        SharedPreferences userPreferences=getSharedPreferences("context",MODE_PRIVATE);
         String userString=userPreferences.getString("user","");
         userClass user = gson.fromJson(userString,userClass.class);
-//        for(userContact contact: user.getContacts()){
-//
-//        }
-//        toast t=new toast();
-//        t.handle_error(user.userName,getApplicationContext());
-//        TextView element=findViewById(R.id.privacySettingText);
-////
-//        element.setText(user.getContacts().get(0).contactName);
-        final ListView listview = (ListView) findViewById(R.id.listview);
-        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-                "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-                "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-                "Android", "iPhone", "WindowsMobile" };
-        final StableArrayAdapter adapter = new StableArrayAdapter(this,
-                R.layout.contact_row_layout, values);
+        final ListView listview = (ListView) findViewById(R.id.make_contact_signup_list);
+        ArrayList<userContact> contacts=user.getContacts();
+        final StableArrayAdapter adapter = new StableArrayAdapter(this,R.layout.contact_row_layout, contacts);
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -65,7 +51,7 @@ public class FamilyActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
+                final userContact item = (userContact) parent.getItemAtPosition(position);
                 view.animate().setDuration(2000).alpha(0)
                         .withEndAction(new Runnable() {
                             @Override
@@ -78,20 +64,65 @@ public class FamilyActivity extends AppCompatActivity {
             }
 
         });
+
+        //implement add button in contacts
+        FloatingActionButton addContact=findViewById(R.id.addContactButton);
+        addContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.contact_add_edit_layout, null);
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                boolean focusable = true;
+                final PopupWindow popupWindow = new PopupWindow(popupView, width, height,focusable);
+//                popupWindow.showAsDropDown(view, Gravity.CENTER, Gravity.CENTER);
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                popupView.findViewById(R.id.saveNewContactButton).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        EditText contactView=popupView.findViewById(R.id.newContactNameText);
+                        String contactName=contactView.getText().toString();
+                        EditText mobileView=popupView.findViewById(R.id.newContactMobileText);
+                        String mobile=mobileView.getText().toString();
+                        EditText relationView=popupView.findViewById(R.id.newContactRelationText);
+                        String relation=relationView.getText().toString();
+                        if(contactName.length()==0 || mobile.length()==0|| relation.length()==0){
+                            toast t=new toast();
+                            t.handle_error("Please fill appropriate values",getApplicationContext());
+                            return;
+                        }
+                        user.addEmergencyContact(contactName,mobile,relation,getApplicationContext());
+                        adapter.refresh();
+                        popupWindow.dismiss();
+                    }
+                });
+            }
+        });
     }
 
-    private class StableArrayAdapter extends ArrayAdapter<String> {
-
-        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+    private class StableArrayAdapter extends BaseAdapter {
         private final Context context;
-        private final String[] values;
+        private ArrayList<userContact> values;
+
+        @Override
+        public int getCount() {
+            return values.size();
+        }
+
+        @Override
+        public userContact getItem(int position) {
+            return values.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
         public StableArrayAdapter(Context context, int textViewResourceId,
-                                  String[] objects) {
-            super(context, textViewResourceId, objects);
-//            for (int i = 0; i < objects.size(); ++i) {
-//                mIdMap.put(objects.get(i), i);
-//
-//            }
+                                  ArrayList<userContact> objects) {
+//            refresh();
             this.context=context;
             this.values=objects;
         }
@@ -101,25 +132,37 @@ public class FamilyActivity extends AppCompatActivity {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View rowView = inflater.inflate(R.layout.contact_row_layout, parent, false);
             TextView textView = (TextView) rowView.findViewById(R.id.contactNameText);
-            ImageView imageView = (ImageView) rowView.findViewById(R.id.contactIcon);
-            textView.setText(values[position]);
-            // Change the icon for Windows and iPhone
-            String s = values[position];
-            if (s.startsWith("Windows7") || s.startsWith("iPhone")
-                    || s.startsWith("Solaris")) {
-                imageView.setImageResource(R.drawable.emergency_circle);
-            } else {
-                imageView.setImageResource(R.drawable.emergency_circle_black);
-            }
+            textView.setText(values.get(position).contactName);
+            TextView relation=(TextView) rowView.findViewById(R.id.contactNameRelation);
+            relation.setText(values.get(position).relation);
+            TextView contactNumber=(TextView) rowView.findViewById(R.id.contactNumberId);
+            contactNumber.setText(values.get(position).mobileNo);
+            ImageButton deleteContactButton=(ImageButton) rowView.findViewById(R.id.deleteContactButton);
+            deleteContactButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Gson gson=new Gson();
+                    SharedPreferences userPreferences=getSharedPreferences("context",MODE_PRIVATE);
+                    String userString=userPreferences.getString("user","");
+                    userClass user = gson.fromJson(userString,userClass.class);
+                    if(!user.removeEmergencyContact(getItem(position), getApplicationContext())){
+                        toast t=new toast();
+                        t.handle_error("data remove error",getApplicationContext());
+                    }
 
+                    refresh();
+                }
+            });
             return rowView;
         }
-
-//        @Override
-//        public long getItemId(int position) {
-////            String item = getItem(position);
-////            return mIdMap.get(item);
-//        }
+        public void refresh(){
+            Gson gson=new Gson();
+            SharedPreferences userPreferences=getSharedPreferences("context",MODE_PRIVATE);
+            String userString=userPreferences.getString("user","");
+            userClass user = gson.fromJson(userString,userClass.class);
+            values=user.getContacts();
+            this.notifyDataSetChanged();
+        }
 
         @Override
         public boolean hasStableIds() {

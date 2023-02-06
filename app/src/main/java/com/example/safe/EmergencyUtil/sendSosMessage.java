@@ -1,5 +1,6 @@
 package com.example.safe.EmergencyUtil;
 
+import static android.content.Context.MODE_PRIVATE;
 import static androidx.core.app.ActivityCompat.requestPermissions;
 
 import android.Manifest;
@@ -11,14 +12,21 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.example.safe.testing.toast;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 public class sendSosMessage {
     private boolean smsSendingPermission=false;
@@ -44,10 +52,17 @@ public class sendSosMessage {
             smsSendingPermission=true;
         }
         if(!smsSendingPermission){
+            new toast().handle_error("Permission Denied. Please enable in settings",currentContext);
             return false;
         }
-        String phoneNumber="9909402670";
+//        String phoneNumber="9909402670";
+        SharedPreferences userPreferences=currentActivity.getApplicationContext().getSharedPreferences("context",MODE_PRIVATE);
+        String userClassString=userPreferences.getString("user","");
+        JsonObject user=new Gson().fromJson(userClassString,JsonObject.class);
+        JsonArray userContacts=user.get("contacts").getAsJsonArray();
         String message="emergency";
+
+
         String SENT = "SMS_SENT";
         String DELIVERED = "SMS_DELIVERED";
 
@@ -102,9 +117,13 @@ public class sendSosMessage {
                 }
             }
         }, new IntentFilter(DELIVERED));
-
-        SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
+        for(int i=0;i<userContacts.size();i++){
+            JsonObject userContact=new Gson().fromJson(userContacts.get(i).toString(),JsonObject.class);
+            Log.d("debug",userContact.get("contactName").toString());
+            String phoneNumber=userContact.get("mobileNo").toString();
+            SmsManager sms = SmsManager.getDefault();
+            sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
+        }
         return true;
     }
 }

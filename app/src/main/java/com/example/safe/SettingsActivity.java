@@ -1,4 +1,4 @@
-package com.example.safe.Activities;
+package com.example.safe;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;

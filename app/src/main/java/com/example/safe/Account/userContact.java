@@ -1,4 +1,4 @@
-package com.example.safe.EmergencyUtil;
+package com.example.safe.Account;
 
 public class userContact{
     public String contactName;

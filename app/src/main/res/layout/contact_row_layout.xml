@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp">
+    android:layout_height="wrap_content">
 
     <!--    <TextView-->
     <!--        android:id="@+id/label"-->
@@ -18,22 +18,25 @@
 
         <ImageView
             android:id="@+id/contactIcon"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginStart="16dp"
-            android:src="@drawable/emergency_circle"
+            android:src="@drawable/user"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/contactNameRelation"
-            android:layout_width="100dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:lines="2"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:paddingEnd="20dp"
-            android:text="Manage what information you want to see and share on Safe app"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Relation"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/contactNameText"
             app:layout_constraintTop_toBottomOf="@+id/contactNameText" />
 
@@ -43,10 +46,33 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="name1"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Name"
             android:textSize="20dp"
             app:layout_constraintStart_toEndOf="@+id/contactIcon"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/contactNumberId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/contactNameText"
+            app:layout_constraintEnd_toStartOf="@+id/deleteContactButton"
+            app:layout_constraintStart_toEndOf="@+id/contactNameText" />
+
+        <ImageButton
+            android:id="@+id/deleteContactButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/contactNameText"
+            app:srcCompat="@android:drawable/ic_menu_delete" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">safe</string>
+    <string name="hostname">192.168.56.1</string>
+    <string name="port">8000</string>
     <string name="title_activity_send_location">SendLocation</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -25,4 +27,10 @@
     <string name="title_notifications">Notifications</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="countries">
+        <item>India</item>
+        <item>USA</item>
+        <item>Sri Lanka</item>
+        <item>Bangladesh</item>
+    </string-array>
 </resources>

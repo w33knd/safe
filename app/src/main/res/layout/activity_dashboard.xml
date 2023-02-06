@@ -23,6 +23,8 @@
         android:layout_height="100dp"
         android:background="@drawable/navbar_gradient_reverse"
         android:text="SAFE"
+        android:fontFamily="@font/montserrat_bold"
+        style="bold"
         android:textAlignment="center"
         android:textColor="@color/app_ghost_white"
         android:textSize="34sp"
@@ -39,9 +41,10 @@
         android:layout_marginBottom="16dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toTopOf="@+id/navigationFrameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/safeHeadingText"
-        app:layout_constraintVertical_bias="0.025"
-        tools:layout_editor_absoluteX="16dp">
+        app:layout_constraintVertical_bias="0.025">
 
     </FrameLayout>
 
@@ -64,6 +67,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:text="Emergency"
+        android:fontFamily="@font/montserrat_bold"
         android:textSize="20dp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/buttonEmergency"
@@ -102,6 +106,7 @@
         android:layout_marginTop="8dp"
         android:background="@color/app_ghost_white"
         android:text="Hospitals"
+        android:fontFamily="@font/montserrat_bold"
         android:textColor="@color/black"
         android:translationZ="10dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -114,6 +119,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Police \nStations"
+        android:fontFamily="@font/montserrat_bold"
         android:textAlignment="center"
         android:background="@color/app_ghost_white"
         android:textColor="@color/black"

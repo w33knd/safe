@@ -10,6 +10,9 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -22,6 +25,7 @@ import com.example.safe.EmergencyUtil.fallDetect;
 import com.example.safe.Fragments.navigationBarFragment;
 import com.example.safe.EmergencyUtil.sendSosMessage;
 import com.example.safe.R;
+import com.example.safe.testing.toast;
 
 import org.w3c.dom.Text;
 
@@ -29,6 +33,11 @@ public class emergencyActivity extends AppCompatActivity {
 //    private Timer timer;
     private Handler handler;
     private int emergencyStep=0;
+    GestureDetector gestureDetector;
+    boolean tapped;
+    ImageView imageView;
+
+// inside onCreate of Activity or Fragment
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void changeEmergencyNextStep(TextView nextStepInfo){
         switch(this.emergencyStep){
@@ -67,34 +76,39 @@ public class emergencyActivity extends AppCompatActivity {
         emergencyButton.startAnimation(shake);
         fallDetect userState=new fallDetect();
         userState.initialize(this);
-        emergencyButton.setOnClickListener(new View.OnClickListener() {
-            Double lastClickTime=0.0;
-            final Double DOUBLE_CLICK_TIME_DELTA=1000.0;
-            boolean firstClick=false;
-            boolean secondClick=false;
-            @Override
-            public void onClick(View view){
-                double clickTime = System.currentTimeMillis();
-                if(firstClick==false){
-                    firstClick=true;
-                    lastClickTime = clickTime;
-                    return;
-                }
-                if(secondClick==false){
-                    secondClick=true;
-                    return;
-                }
-                if (clickTime - lastClickTime < DOUBLE_CLICK_TIME_DELTA) {
-                    changeEmergencyNextStep(findViewById(R.id.nextStepInfoText));
-                }else{
-                    firstClick=secondClick=false;
-                }
-                lastClickTime = clickTime;
-            }
 
+        gestureDetector = new GestureDetector(getApplicationContext(),new GestureListener());
+        emergencyButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return gestureDetector.onTouchEvent(motionEvent);
+            }
         });
     }
+    int count=0;
+    long t1=0,t2=0;
+    class GestureListener extends
+            GestureDetector.SimpleOnGestureListener {
 
+        @Override
+        public boolean onDown(MotionEvent e) {
+//            Log.d("debug","ondown");
+            if(count == 0) {
+                t1 = System.currentTimeMillis();
+            }
+            if(count == 1){
+                t2 = System.currentTimeMillis();
+            }
+            count++;
+            if(count > 1) count = 0;
+            if(Math.abs(t2 - t1) < 900){
+                t1 = t2 = 0; count = 0;
+                // On double tap here. Do stuff
+                changeEmergencyNextStep(findViewById(R.id.nextStepInfoText));
+            }
+            return true;
+        }
+    }
 
     //overriding back button
     @Override

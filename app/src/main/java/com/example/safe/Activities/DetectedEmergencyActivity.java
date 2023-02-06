@@ -79,5 +79,13 @@ public class DetectedEmergencyActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    /*
+        todo: make onpause end activity if activity is in background
+     */
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
 
 }

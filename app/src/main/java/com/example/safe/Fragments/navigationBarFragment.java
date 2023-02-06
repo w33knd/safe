@@ -1,6 +1,5 @@
 package com.example.safe.Fragments;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -13,10 +12,8 @@ import android.widget.ImageButton;
 
 import com.example.safe.Activities.DashboardActivity;
 import com.example.safe.Activities.FamilyActivity;
-import com.example.safe.Activities.SettingsActivity;
-import com.example.safe.Activities.emergencyActivity;
+import com.example.safe.SettingsActivity;
 import com.example.safe.R;
-import com.example.safe.testing.toast;
 
 public class navigationBarFragment extends Fragment {
 

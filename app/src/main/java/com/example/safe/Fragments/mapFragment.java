@@ -84,7 +84,7 @@ public class mapFragment extends Fragment{
                 if(currentLocation!=null){
                     current=new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
                 }else{
-                    current = new LatLng(-33.852, 151.211);
+                    current = new LatLng(90, 0);
                 }
 //                LatLng current = new LatLng(-33.852, 151.211);
                 googleMap.addMarker(new MarkerOptions()
