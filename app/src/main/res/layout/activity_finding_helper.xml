@@ -6,15 +6,61 @@
     android:layout_height="match_parent"
     tools:context=".Activities.FindingHelperActivity">
 
+    <TextView
+        android:id="@+id/processTitleText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingEnd="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Finding Helper"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/progressBar3"
+        app:layout_constraintEnd_toStartOf="@+id/progressBar3"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/navigationFrameLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:translationZ="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </FrameLayout>
+
     <FrameLayout
         android:id="@+id/mapFrameLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/processDescriptionText">
 
     </FrameLayout>
+
+    <TextView
+        android:id="@+id/processDescriptionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/montserrat_bold_italic"
+        android:textSize="18dp"
+        android:text="Locating trusted safe users"
+        app:layout_constraintStart_toStartOf="@+id/processTitleText"
+        app:layout_constraintTop_toBottomOf="@+id/processTitleText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

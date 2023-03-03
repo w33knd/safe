@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,7 +107,7 @@ public class emailSignupFragment extends Fragment {
                                                     new toast().handle_error("Account created successffully",getContext());
                                                     ProgressBar progress=getActivity().findViewById(R.id.progressBar);
                                                     progress.setProgress(75);
-                                                    getParentFragmentManager().beginTransaction().replace(R.id.signupStepLayout, addContactSignupFragment.class, null).commit();
+                                                    getParentFragmentManager().beginTransaction().replace(R.id.signupStepLayout, completeProfileFragment.class, null).commit();
                                                 }
                                             }
 
@@ -136,13 +137,4 @@ public class emailSignupFragment extends Fragment {
         });
         return v;
     }
-
-//    public boolean adduser(String emailPhone,String password){
-//
-//        new toast().handle_error("Check ",getContext());
-//        if(!user.getSession().isEmpty()){
-//            return true;
-//        }
-//        return false;
-//    }
 }

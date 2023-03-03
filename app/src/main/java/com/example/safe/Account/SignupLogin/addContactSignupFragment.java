@@ -1,5 +1,7 @@
 package com.example.safe.Account.SignupLogin;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,36 +13,35 @@ import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.safe.Account.userClass;
-import com.example.safe.Account.userContact;
 import com.example.safe.Activities.DashboardActivity;
-import com.example.safe.Activities.FamilyActivity;
+import com.example.safe.HttpRequest.APIInterface;
+import com.example.safe.HttpRequest.pojo.Success;
+import com.example.safe.HttpRequest.retrofitClass;
 import com.example.safe.R;
-import com.example.safe.SettingsActivity;
 import com.example.safe.testing.toast;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import com.example.safe.testing.toast;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class addContactSignupFragment extends Fragment {
     ArrayList<localContact> contacts=new ArrayList<>();
     Map<String, String> namePhoneMap = new HashMap<String, String>();
@@ -121,7 +122,7 @@ public class addContactSignupFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_add_contact_signup, container, false);
-        final ListView listview = (ListView) v.findViewById(R.id.make_contact_signup_list);
+        final ListView listview = (ListView) v.findViewById(R.id.contactSignupList);
         askForContactPermission();
         getPhoneNumbers();
         final addContactSignupFragment.StableArrayAdapter adapter = new addContactSignupFragment.StableArrayAdapter(getActivity(),R.layout.new_contact_signup_row_layout, contacts);
@@ -147,7 +148,6 @@ public class addContactSignupFragment extends Fragment {
         nextStepButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ProgressBar progress=getActivity().findViewById(R.id.progressBar);
                 Intent i=new Intent(view.getContext(), DashboardActivity.class);
                 startActivity(i);
             }
@@ -189,20 +189,39 @@ public class addContactSignupFragment extends Fragment {
             textView.setText(values.get(position).contactName);
             TextView contactNumber=(TextView) rowView.findViewById(R.id.contactNumberId);
             contactNumber.setText(values.get(position).mobileNo);
-            TextView deleteContactButton= rowView.findViewById(R.id.addConnectionTextButton);
-            deleteContactButton.setOnClickListener(new View.OnClickListener() {
+            TextView connectTextButton= rowView.findViewById(R.id.addConnectionTextButton);
+            connectTextButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    Gson gson=new Gson();
-//                    SharedPreferences userPreferences=getSharedPreferences("context",MODE_PRIVATE);
-//                    String userString=userPreferences.getString("user","");
-//                    userClass user = gson.fromJson(userString,userClass.class);
-//                    if(!user.removeEmergencyContact(getItem(position), getApplicationContext())){
-//                        toast t=new toast();
-//                        t.handle_error("data remove error",getApplicationContext());
-//                    }
-//
-//                    refresh();
+                    if(connectTextButton.getText().equals("Requested")){
+                        return;
+                    }
+                    Gson gson=new Gson();
+                    SharedPreferences userPreferences=getActivity().getSharedPreferences("context",MODE_PRIVATE);
+                    String userString=userPreferences.getString("user","");
+                    userClass user = gson.fromJson(userString,userClass.class);
+                    APIInterface apiInterface;
+                    apiInterface = retrofitClass.getClient(getContext()).create(APIInterface.class);
+                    Call<Success> call1 = apiInterface.addConnection("Bearer "+user.getSession(),user.getProfileId(),values.get(position).mobileNo);
+                    call1.enqueue(new Callback<Success>() {
+                        @Override
+                        public void onResponse(Call<Success> call, Response<Success> response) {
+                            Success res=response.body();
+                            if(res.success==false){
+                                new toast().handle_error(res.msg,getContext());
+                            }else{
+                                connectTextButton.setText("Requested");
+                                connectTextButton.setTextColor(getResources().getColor(R.color.app_beau_blue));
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Success> call, Throwable t) {
+                            call.cancel();
+                        }
+                    });
+
+                    refresh();
                 }
             });
             return rowView;

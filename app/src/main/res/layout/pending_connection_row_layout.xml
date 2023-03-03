@@ -21,38 +21,22 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:src="@drawable/user"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/contactNameRelation"
+            android:id="@+id/contactNameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
             android:fontFamily="@font/montserrat_bold"
-            android:text="Relation"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/contactIcon"
-            app:layout_constraintTop_toBottomOf="@+id/contactNameText" />
-
-        <TextView
-            android:id="@+id/contactNameText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/montserrat_bold"
-            android:paddingEnd="10dp"
-            android:lineSpacingExtra="5dp"
-            android:paddingRight="10dp"
             android:text="Name"
             android:textSize="20dp"
-            app:layout_constraintEnd_toStartOf="@+id/contactNumberId"
             app:layout_constraintStart_toEndOf="@+id/contactIcon"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,32 +44,32 @@
             android:id="@+id/contactNumberId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_bold"
             android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="@+id/contactNameText"
-            app:layout_constraintEnd_toStartOf="@+id/deleteContactButton" />
+            app:layout_constraintStart_toStartOf="@+id/contactNameText"
+            app:layout_constraintTop_toBottomOf="@+id/contactNameText" />
 
         <ImageButton
-            android:id="@+id/deleteContactButton"
+            android:id="@+id/acceptRequestButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/deleteRequestButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_input_add" />
+
+        <ImageButton
+            android:id="@+id/deleteRequestButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/contactNameText"
-            app:srcCompat="@android:drawable/ic_menu_delete" />
-
-        <TextView
-            android:id="@+id/contactIdText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:visibility="invisible"/>
+            app:srcCompat="@android:drawable/ic_delete" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

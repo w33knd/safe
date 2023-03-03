@@ -1,4 +1,5 @@
 package com.example.safe;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,6 +12,10 @@ import com.example.safe.Account.userClass;
 import com.example.safe.Activities.DashboardActivity;
 import com.example.safe.EmergencyUtil.FallDetectService;
 import com.example.safe.testing.toast;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,11 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_main);
         //create shared preferences for emergency contact
-        /**
-         * TODO add this to correct preferences settings
-         */
         SharedPreferences userPreferences=getSharedPreferences("context",MODE_PRIVATE);
-        SharedPreferences.Editor  editUser=userPreferences.edit();
         String data = userPreferences.getString("user",null);
 
 
@@ -37,14 +38,19 @@ public class MainActivity extends AppCompatActivity {
         if(data!=null){
             Gson gson=new Gson();
             userClass user = gson.fromJson(data,userClass.class);
-            Log.d("debug",user.getPhoneNumber());
             if(!user.getSession().isEmpty()){
-                //verify session and uid before starting and verifying number
+                //verify session and uid before starting and verifying
+                Log.d("debug","fcm"+user.getFcmToken());
+
+
                 startFallDetectService();
-                switchActivity ();
+                switchActivity();
+            }else{
+                switchOnboarding();
             }
+        }else{
+            switchOnboarding();
         }
-        switchOnboarding();
     }
 
     //start user fall detect service

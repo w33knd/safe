@@ -75,58 +75,6 @@
         app:layout_constraintStart_toStartOf="@+id/buttonEmergency"
         app:layout_constraintTop_toTopOf="@+id/buttonEmergency" />
 
-    <ImageButton
-        android:id="@+id/buttonHospitalNearby"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-
-        android:translationZ="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/safeHeadingText"
-        app:srcCompat="@mipmap/hospital_image_asset" />
-
-    <ImageButton
-        android:id="@+id/buttonPoliceNearby"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:translationZ="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/testHospital"
-        app:srcCompat="@mipmap/police_image_asset" />
-
-    <TextView
-        android:id="@+id/testHospital"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/app_ghost_white"
-        android:text="Hospitals"
-        android:fontFamily="@font/montserrat_bold"
-        android:textColor="@color/black"
-        android:translationZ="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonHospitalNearby" />
-
-    <TextView
-        android:id="@+id/textPolice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Police \nStations"
-        android:fontFamily="@font/montserrat_bold"
-        android:textAlignment="center"
-        android:background="@color/app_ghost_white"
-        android:textColor="@color/black"
-        android:translationZ="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonPoliceNearby" />
-
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
@@ -136,5 +84,75 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/safeHeadingText" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/buttonEmergency"
+        android:background="@color/app_ghost_white"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Nearby"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/buttonHospitalNearby"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+
+            android:layout_marginTop="8dp"
+            android:translationZ="10dp"
+            app:layout_constraintEnd_toEndOf="@+id/textView18"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView18"
+            app:srcCompat="@mipmap/hospital_image_asset" />
+
+        <ImageButton
+            android:id="@+id/buttonPoliceNearby"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:translationZ="10dp"
+            app:layout_constraintEnd_toEndOf="@+id/testHospital"
+            app:layout_constraintStart_toStartOf="@+id/testHospital"
+            app:layout_constraintTop_toBottomOf="@+id/testHospital"
+            app:srcCompat="@mipmap/police_image_asset" />
+
+        <TextView
+            android:id="@+id/testHospital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Hospitals"
+            android:textColor="@color/black"
+            android:translationZ="10dp"
+            app:layout_constraintEnd_toEndOf="@+id/buttonHospitalNearby"
+            app:layout_constraintStart_toStartOf="@+id/buttonHospitalNearby"
+            app:layout_constraintTop_toBottomOf="@+id/buttonHospitalNearby" />
+
+        <TextView
+            android:id="@+id/textPolice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Police \nStations"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:translationZ="10dp"
+            app:layout_constraintEnd_toEndOf="@+id/buttonPoliceNearby"
+            app:layout_constraintStart_toStartOf="@+id/buttonPoliceNearby"
+            app:layout_constraintTop_toBottomOf="@+id/buttonPoliceNearby" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

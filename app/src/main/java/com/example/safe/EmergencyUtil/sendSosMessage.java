@@ -119,7 +119,7 @@ public class sendSosMessage {
         }, new IntentFilter(DELIVERED));
         for(int i=0;i<userContacts.size();i++){
             JsonObject userContact=new Gson().fromJson(userContacts.get(i).toString(),JsonObject.class);
-            Log.d("debug",userContact.get("contactName").toString());
+//            Log.d("debug",userContact.get("contactName").toString());
             String phoneNumber=userContact.get("mobileNo").toString();
             SmsManager sms = SmsManager.getDefault();
             sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);

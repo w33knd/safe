@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -39,7 +40,7 @@ public class locationSignupFragment extends Fragment {
         nextStepButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TextView postalCodeEditText=v.findViewById(R.id.postalCodeEditText);
+                EditText postalCodeEditText=v.findViewById(R.id.postalCodeEditText);
                 String postalCode=postalCodeEditText.getText().toString();
                 TextInputLayout countryInput=v.findViewById(R.id.countryInputLayout);
                 String country=countryInput.getEditText().getText().toString();

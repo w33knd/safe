@@ -76,7 +76,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ListView
-                    android:id="@+id/make_contact_signup_list"
+                    android:id="@+id/contactSignupList"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layout_constraintBottom_toBottomOf="parent"

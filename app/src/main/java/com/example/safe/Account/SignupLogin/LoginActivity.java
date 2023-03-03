@@ -1,18 +1,5 @@
 package com.example.safe.Account.SignupLogin;
 
-//import androidx.appcompat.app.AppCompatActivity;
-//
-//import android.os.Bundle;
-//import com.example.safe.R;
-//public class SignupLoginActivity extends AppCompatActivity {
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_signup_login);
-//    }
-//}
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -24,7 +11,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.safe.Account.userClass;
+import com.example.safe.Activities.DashboardActivity;
 import com.example.safe.HttpRequest.APIInterface;
+import com.example.safe.HttpRequest.pojo.getUserResponse;
 import com.example.safe.HttpRequest.pojo.loginUserRequest;
 import com.example.safe.HttpRequest.pojo.loginUserResponse;
 import com.example.safe.HttpRequest.retrofitClass;
@@ -90,6 +79,28 @@ public class LoginActivity extends AppCompatActivity {
                                         user.setSession(loginUser.BearerToken);
                                         user.setPhoneNumber(emailPhone);
                                         user.updateSharedPreferences(getApplicationContext());
+                                        Call<getUserResponse> call2=apiInterface.getUser("Bearer "+user.getSession(),user.getProfileId());
+                                        call2.enqueue(new Callback<getUserResponse>() {
+                                            @Override
+                                            public void onResponse(Call<getUserResponse> call, Response<getUserResponse> response) {
+                                                getUserResponse res=response.body();
+                                                if(res.success==false){
+                                                    new toast().handle_error(res.msg,getApplicationContext());
+                                                }else{
+                                                    user.setUserName(res.data.firstName+" "+res.data.lastName);
+                                                    user.firstName=res.data.firstName;
+                                                    user.setPostalCode(res.data.homeAddress.pincode);
+                                                    user.updateSharedPreferences(getApplicationContext());
+                                                    Intent i=new Intent(view.getContext(), DashboardActivity.class);
+                                                    startActivity(i);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<getUserResponse> call, Throwable t) {
+                                                call.cancel();
+                                            }
+                                        });
                                     }
                                 }
 
